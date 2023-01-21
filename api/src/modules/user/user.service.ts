@@ -16,11 +16,16 @@ export class UserService {
         return from(this.userRepository.save(user));
     }
 
+    findOne(id: number): Observable<User> {
+        // @ts-ignore
+        return from(this.userRepository.findOne({id}));
+    }
+
     findAll(): Observable<User[]> {
         return from(this.userRepository.find());
     }
 
-    delete(id: number): Observable<any> {
+    deleteOne(id: number): Observable<any> {
         return from(this.userRepository.delete(id));
     }
 
