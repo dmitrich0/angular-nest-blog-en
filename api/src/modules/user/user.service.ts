@@ -2,9 +2,10 @@ import {Injectable} from '@nestjs/common';
 import {InjectRepository} from "@nestjs/typeorm";
 import {UserEntity} from "../../models/user.entity";
 import {Repository} from "typeorm";
-import {User} from "../../models/user.interface";
+import {User, UserRole} from "../../models/user.interface";
 import {catchError, from, map, Observable, switchMap, throwError} from "rxjs";
 import {AuthService} from "../auth/auth.service";
+import {IPaginationOptions, paginate, Pagination} from "nestjs-typeorm-paginate";
 
 @Injectable()
 export class UserService {
@@ -22,7 +23,7 @@ export class UserService {
                 newUser.username = user.username;
                 newUser.email = user.email;
                 newUser.password = passwordHash;
-                newUser.role = user.role;
+                newUser.role = UserRole.USER;
                 return from(this.userRepository.save(newUser)).pipe(
                     map((user: User) => {
                         const {password, ...result} = user;
@@ -54,6 +55,17 @@ export class UserService {
         );
     }
 
+    paginate(options: IPaginationOptions): Observable<Pagination<User>> {
+        return from(paginate<User>(this.userRepository, options)).pipe(
+            map((usersPagable: Pagination<User>) => {
+                usersPagable.items.forEach(user => {
+                    delete user.password;
+                });
+                return usersPagable;
+            })
+        )
+    }
+
     deleteOne(id: number): Observable<any> {
         return from(this.userRepository.delete(id));
     }
@@ -61,6 +73,7 @@ export class UserService {
     updateOne(id: number, user: User): Observable<any> {
         delete user.email;
         delete user.password;
+        delete user.role;
         return from(this.userRepository.update(id, user));
     }
 
@@ -95,9 +108,9 @@ export class UserService {
     findByMail(email: string): Observable<User> {
         return from(this.userRepository.findOneBy({email}));
     }
-    
+
     updateRoleOfUser(id: number, user: User): Observable<any> {
         return from(this.userRepository.update(id, user));
     }
-    
+
 }
