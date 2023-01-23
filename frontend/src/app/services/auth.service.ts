@@ -1,10 +1,18 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {map} from "rxjs";
+import {map, tap} from "rxjs";
 
 export interface LoginForm {
   email: string;
   password: string;
+}
+
+export interface User {
+  name?: string;
+  username?: string;
+  email?: string;
+  password?: string;
+  passwordConfirm?: string;
 }
 
 @Injectable({
@@ -23,5 +31,12 @@ export class AuthService {
         return token;
       })
     );
+  }
+
+  register(user: User) {
+    return this.httpClient.post<any>('/api/users', user).pipe(
+      tap(user => console.log(user)),
+      map(user => user)
+    )
   }
 }
