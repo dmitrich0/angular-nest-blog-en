@@ -12,7 +12,8 @@ export interface User {
   username?: string;
   email?: string;
   password?: string;
-  passwordConfirm?: string;
+  // passwordConfirm?: string;
+  role?: string;
 }
 
 @Injectable({

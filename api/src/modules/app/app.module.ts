@@ -14,7 +14,6 @@ import {AuthModule} from "../auth/auth.module";
             url: process.env.DATABASE_URL,
             autoLoadEntities: true,
             synchronize: true,
-            
         }),
         UserModule,
         AuthModule

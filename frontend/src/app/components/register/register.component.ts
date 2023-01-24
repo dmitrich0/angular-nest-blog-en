@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators} from "@angular/forms";
-import {AuthService} from "../../services/auth.service";
+import {AuthService} from "../../services/auth-service/auth.service";
 import {Router} from "@angular/router";
 import {map} from "rxjs";
 
