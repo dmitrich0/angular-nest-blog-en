@@ -1,8 +1,32 @@
 import {Component} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators} from "@angular/forms";
 import {AuthService} from "../../services/auth.service";
 import {Router} from "@angular/router";
 import {map} from "rxjs";
+
+class CustomValidators {
+  static passwordContainsNumber(control: AbstractControl): ValidationErrors | null {
+    const regex = /\d/;
+    if (regex.test(control.value) && control.value !== null) {
+      return null;
+    } else {
+      return {
+        passwordInvalid: true
+      }
+    }
+  }
+
+  static passwordMatches(control: AbstractControl): ValidationErrors | null {
+    const password = control.get('password')?.value;
+    const passwordConfirm = control.get('passwordConfirm')?.value;
+    if (password === passwordConfirm && password !== null && passwordConfirm !== null) {
+      return null;
+    }
+    return {
+      passwordsNotMatching: true
+    }
+  }
+}
 
 @Component({
   selector: 'app-register',
@@ -31,13 +55,13 @@ export class RegisterComponent {
       password: [null, [
         Validators.required,
         Validators.minLength(3),
-        // CustomValidators.passwordContainsNumber
+        CustomValidators.passwordContainsNumber
       ]],
       passwordConfirm: [null, [
         Validators.required
       ]]
     }, {
-      // validators: CustomValidator.passwordMatches
+      validators: CustomValidators.passwordMatches
     })
   }
 
