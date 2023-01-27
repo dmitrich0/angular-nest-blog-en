@@ -3,3 +3,4 @@
 /api/.idea/
 /api/dist/
 /api/.env
+/e2e/node_modules
