@@ -4,3 +4,5 @@
 /api/dist/
 /api/.env
 /e2e/node_modules
+/e2e/mochawesome-report
+/e2e/cypress/videos

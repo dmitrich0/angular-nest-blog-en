@@ -1,4 +1,4 @@
-import {EMAIL, PASSWORD} from "./constants.cy";
+import {EMAIL, PASSWORD} from "./constants";
 
 describe('Test Login Flow', () => {
     it('should login user', () => {
