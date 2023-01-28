@@ -17,13 +17,17 @@ export class AppComponent {
     {
       name: 'Register',
       link: 'register'
+    },
+    {
+      name: 'Update profile',
+      link: 'update-profile'
     }
   ]
 
   constructor(private router: Router) {
   }
 
-  navigateTo(value: string) {
+  navigateTo(value:  string) {
     this.router.navigate(['../', value]);
   }
 }
