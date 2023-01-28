@@ -29,6 +29,12 @@ export class UserService {
 
   }
 
+  findOne(id: number): Observable<User> {
+    return this.httpClient.get('/api/users/' + id).pipe(
+      map((user: User) => user)
+    );
+  }
+
   findAll(page: number, size: number): Observable<UserData> {
     return this.httpClient.get(`/api/users?page=${page}&limit=${size}`).pipe(
       // @ts-ignore
