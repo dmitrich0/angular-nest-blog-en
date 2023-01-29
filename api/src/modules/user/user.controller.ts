@@ -13,7 +13,7 @@ import {
   Request, Res
 } from '@nestjs/common';
 import {UserService} from "./user.service";
-import {User, UserRole} from "../../models/user.interface";
+import {IUser, UserRole} from "../../models/user.interface";
 import {catchError, map, Observable, of} from "rxjs";
 import {hasRoles} from "../../decorators/roles.decorator";
 import {JwtAuthGuard} from "../../guards/jwt-guard";
@@ -46,15 +46,15 @@ export class UserController {
   }
 
   @Post()
-  create(@Body() user: User): Observable<User | Object> {
+  create(@Body() user: IUser): Observable<IUser | Object> {
     return this.userService.create(user).pipe(
-      map((user: User) => user),
+      map((user: IUser) => user),
       catchError(err => of({error: err.message}))
     );
   }
 
   @Post('login')
-  login(@Body() user: User): Observable<Object> {
+  login(@Body() user: IUser): Observable<Object> {
     return this.userService.login(user).pipe(
       map((jwt: string) => {
         return {access_token: jwt};
@@ -63,7 +63,7 @@ export class UserController {
   }
 
   @Get(':id')
-  findOne(@Param() params): Observable<User> {
+  findOne(@Param() params): Observable<IUser> {
     return this.userService.findOne(params.id);
   }
 
@@ -72,7 +72,7 @@ export class UserController {
     @Query('page') page: number = 1,
     @Query('limit') limit: number = 10,
     @Query('username') username: string
-  ): Observable<Pagination<User>> {
+  ): Observable<Pagination<IUser>> {
     limit = limit > 100 ? 100 : limit;
     if (username === null || username === undefined) {
       return this.userService.paginate({
@@ -89,20 +89,20 @@ export class UserController {
   }
 
   @Delete(':id')
-  deleteOne(@Param('id') id: string): Observable<User> {
+  deleteOne(@Param('id') id: string): Observable<IUser> {
     return this.userService.deleteOne(Number(id));
   }
 
   @UseGuards(JwtAuthGuard, UserIsUserGuard)
   @Put(':id')
-  updateOne(@Param('id') id: string, @Body() user: User): Observable<any> {
+  updateOne(@Param('id') id: string, @Body() user: IUser): Observable<any> {
     return this.userService.updateOne(Number(id), user);
   }
 
   @hasRoles(UserRole.ADMIN)
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Put(':id/role')
-  updateRoleOfUser(@Param('id') id: string, @Body() user: User): Observable<User> {
+  updateRoleOfUser(@Param('id') id: string, @Body() user: IUser): Observable<IUser> {
     return this.userService.updateRoleOfUser(Number(id), user);
   }
 
@@ -110,9 +110,9 @@ export class UserController {
   @Post('upload')
   @UseInterceptors(FileInterceptor('file', storage))
   uploadFile(@UploadedFile() file, @Request() req): Observable<Object> {
-    const user: User = req.user.user;
+    const user: IUser = req.user.user;
     return this.userService.updateOne(user.id, {profileImage: file.filename}).pipe(
-      map((user: User) => ({
+      map((user: IUser) => ({
         profileImage: user.profileImage
       }))
     );

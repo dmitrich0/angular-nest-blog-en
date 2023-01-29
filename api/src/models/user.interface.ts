@@ -1,3 +1,5 @@
+import {IBlogEntry} from "./blog-entry.interface";
+
 export enum UserRole {
     ADMIN = 'admin',
     CHIEFEDITOR = 'chiefeditor',
@@ -5,7 +7,7 @@ export enum UserRole {
     USER = 'user'
 }
 
-export interface User {
+export interface IUser {
     id?: number;
     name?: string;
     username?: string;
@@ -13,4 +15,5 @@ export interface User {
     password?: string;
     role?: UserRole;
     profileImage?: string;
+    blogEntries?: IBlogEntry[];
 }
