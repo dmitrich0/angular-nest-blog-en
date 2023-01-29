@@ -1,1 +1,20 @@
-<h1>is authenticated</h1>
+<form [formGroup]="form" (ngSubmit)="update()">
+  <div>
+    <mat-card class="container">
+      <mat-form-field>
+        <mat-label>ID</mat-label>
+        <input matInput formControlName="id">
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Name</mat-label>
+        <input matInput formControlName="name">
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Username</mat-label>
+        <input matInput formControlName="username">
+      </mat-form-field>
+      <p>You can't change your password, profile image or email yet</p>
+      <button mat-flat-button color="primary" type="submit" [disabled]="!form.valid">Update profile data</button>
+    </mat-card>
+  </div>
+</form>
