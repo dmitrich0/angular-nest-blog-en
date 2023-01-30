@@ -33,8 +33,16 @@ export class BlogService {
   findByUserId(userId: number): Observable<IBlogEntry[]> {
     return from(this.blogRepository.find({
       where: {
-        // @ts-ignore
-        author: userId
+        author: {id: userId}
+      },
+      relations: ['author']
+    }))
+  }
+
+  findOneById(id: number): Observable<IBlogEntry> {
+    return from(this.blogRepository.findOne({
+      where: {
+        id: id
       },
       relations: ['author']
     }))
