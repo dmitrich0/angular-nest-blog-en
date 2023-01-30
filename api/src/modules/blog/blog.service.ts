@@ -27,7 +27,9 @@ export class BlogService {
   }
 
   findAll(): Observable<IBlogEntry[]> {
-    return from(this.blogRepository.find({relations: ['author']}));
+    return from(this.blogRepository.find({
+      relations: ['author'],
+    }));
   }
 
   findByUserId(userId: number): Observable<IBlogEntry[]> {
@@ -35,7 +37,7 @@ export class BlogService {
       where: {
         author: {id: userId}
       },
-      relations: ['author']
+      relations: ['author'],
     }))
   }
 
@@ -44,8 +46,18 @@ export class BlogService {
       where: {
         id: id
       },
-      relations: ['author']
+      relations: ['author'],
     }))
+  }
+
+  updateOne(id: number, blogEntry: IBlogEntry): Observable<IBlogEntry> {
+    return from(this.blogRepository.update(id, blogEntry)).pipe(
+      switchMap(() => this.findOneById(id))
+    )
+  }
+  
+  deleteOne(id: number): Observable<any> {
+    return from(this.blogRepository.delete(id));
   }
 
   generateSlug(title: string): Observable<string> {

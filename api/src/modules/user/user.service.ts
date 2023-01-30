@@ -3,7 +3,7 @@ import {InjectRepository} from "@nestjs/typeorm";
 import {UserEntity} from "../../models/user.entity";
 import {Like, Repository} from "typeorm";
 import {IUser, UserRole} from "../../models/user.interface";
-import {catchError, from, map, Observable, switchMap, throwError} from "rxjs";
+import {catchError, from, map, Observable, switchMap, tap, throwError} from "rxjs";
 import {AuthService} from "../auth/auth.service";
 import {IPaginationOptions, paginate, Pagination} from "nestjs-typeorm-paginate";
 

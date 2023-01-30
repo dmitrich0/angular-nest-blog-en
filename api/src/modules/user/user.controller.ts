@@ -7,10 +7,11 @@ import {
   Post,
   Put,
   Query,
+  Request,
+  Res,
   UploadedFile,
   UseGuards,
-  UseInterceptors,
-  Request, Res
+  UseInterceptors
 } from '@nestjs/common';
 import {UserService} from "./user.service";
 import {IUser, UserRole} from "../../models/user.interface";
@@ -88,6 +89,8 @@ export class UserController {
     }, {username})
   }
 
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @hasRoles(UserRole.ADMIN)
   @Delete(':id')
   deleteOne(@Param('id') id: string): Observable<IUser> {
     return this.userService.deleteOne(Number(id));
@@ -110,17 +113,17 @@ export class UserController {
   @Post('upload')
   @UseInterceptors(FileInterceptor('file', storage))
   uploadFile(@UploadedFile() file, @Request() req): Observable<Object> {
-    const user: IUser = req.user.user;
+    const user: IUser = req.user;
     return this.userService.updateOne(user.id, {profileImage: file.filename}).pipe(
       map((user: IUser) => ({
         profileImage: user.profileImage
       }))
     );
   }
-  
+
   @Get('profile-image/:imagename')
   getProfileImage(@Param('imagename') imageName, @Res() res): Observable<Object> {
     return of(res.sendFile(join(process.cwd(), 'uploads/profile-images/', imageName)));
   }
-  
+
 }

@@ -19,6 +19,8 @@ export class AuthService {
     }
 
     comparePasswords(newPassword: string, passwordHash: string): Observable<any | boolean> {
+        console.log(newPassword);
+        console.log(passwordHash);
         return from(bcrypt.compare(newPassword, passwordHash));
     }
 }
