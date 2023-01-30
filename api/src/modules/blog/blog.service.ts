@@ -26,8 +26,21 @@ export class BlogService {
     )
   }
 
+  findAll(): Observable<IBlogEntry[]> {
+    return from(this.blogRepository.find({relations: ['author']}));
+  }
+
+  findByUserId(userId: number): Observable<IBlogEntry[]> {
+    return from(this.blogRepository.find({
+      where: {
+        // @ts-ignore
+        author: userId
+      },
+      relations: ['author']
+    }))
+  }
+
   generateSlug(title: string): Observable<string> {
     return of(slugify(title));
   }
-
 }
