@@ -47,6 +47,13 @@ export class UserService {
     )
   }
 
+  uploadProfileImage(formData: FormData): Observable<any> {
+    return this.httpClient.post<FormData>('/api/users/upload', formData, {
+      reportProgress: true,
+      observe: 'events'
+    });
+  }
+
   paginateByName(page: number, size: number, username: string): Observable<UserData> {
     return this.httpClient.get(`/api/users?page=${page}&limit=${size}&username=${username}`).pipe(
       // @ts-ignore

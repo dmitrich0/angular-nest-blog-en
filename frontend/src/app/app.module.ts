@@ -17,11 +17,12 @@ import {MatSelectModule} from '@angular/material/select';
 import {UsersComponent} from './components/users/users.component';
 import {MatTableModule} from '@angular/material/table';
 import {MatPaginatorModule} from "@angular/material/paginator";
-import { UserProfileComponent } from './components/user-profile/user-profile.component';
+import {UserProfileComponent} from './components/user-profile/user-profile.component';
 import {MatCardModule} from "@angular/material/card";
-import { UpdateUserProfileComponent } from './components/update-user-profile/update-user-profile.component';
+import {UpdateUserProfileComponent} from './components/update-user-profile/update-user-profile.component';
 import {JWT_OPTIONS, JwtHelperService} from "@auth0/angular-jwt";
 import {JwtInterceptor} from "./interceptors/jwt.interceptor";
+import {MatProgressBarModule} from "@angular/material/progress-bar";
 
 @NgModule({
   declarations: [
@@ -48,6 +49,7 @@ import {JwtInterceptor} from "./interceptors/jwt.interceptor";
     MatTableModule,
     MatPaginatorModule,
     MatCardModule,
+    MatProgressBarModule,
   ],
   providers: [JwtHelperService,
     {provide: JWT_OPTIONS, useValue: JWT_OPTIONS},

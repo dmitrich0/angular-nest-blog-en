@@ -1,18 +1,40 @@
 <form [formGroup]="form" (ngSubmit)="update()">
   <div>
     <mat-card class="container">
-      <mat-form-field>
-        <mat-label>ID</mat-label>
-        <input matInput formControlName="id">
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Name</mat-label>
-        <input matInput formControlName="name">
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Username</mat-label>
-        <input matInput formControlName="username">
-      </mat-form-field>
+      <div class="w-[80%] mb-10">
+        <mat-card>
+          <mat-card-content>
+            <img *ngIf="form.get('profileImage')?.value"
+                 src="http://localhost:3000/api/users/profile-image/{{form.get('profileImage')?.value}}"
+                 alt="Profile image">
+            <ul>
+              <li>
+                <mat-progress-bar [value]="file.progress"></mat-progress-bar>
+              </li>
+            </ul>
+          </mat-card-content>
+          <mat-card-actions>
+            <button mat-button color="warn" (click)="onClick()">
+              <mat-icon>cloud_upload</mat-icon>
+            </button>
+          </mat-card-actions>
+        </mat-card>
+        <input type="file" #fileUpload id="fileUpload" name="fileUpload" accept="image/*" style="display: none">
+      </div>
+      <div class="container w-[80%]">
+        <mat-form-field>
+          <mat-label>ID</mat-label>
+          <input matInput formControlName="id">
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Name</mat-label>
+          <input matInput formControlName="name">
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Username</mat-label>
+          <input matInput formControlName="username">
+        </mat-form-field>
+      </div>
       <p>You can't change your password, profile image or email yet</p>
       <button mat-flat-button color="primary" type="submit" [disabled]="!form.valid">Update profile data</button>
     </mat-card>
