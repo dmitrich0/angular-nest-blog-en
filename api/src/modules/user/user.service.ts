@@ -151,5 +151,4 @@ export class UserService {
   updateRoleOfUser(id: number, user: IUser): Observable<any> {
     return from(this.userRepository.update(id, user));
   }
-
 }
