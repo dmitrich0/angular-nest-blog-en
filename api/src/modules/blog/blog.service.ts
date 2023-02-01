@@ -1,5 +1,5 @@
 import {Injectable} from '@nestjs/common';
-import {from, Observable, of, switchMap} from "rxjs";
+import {from, map, Observable, of, switchMap} from "rxjs";
 import {IBlogEntry} from "../../models/blog-entry.interface";
 import {IUser} from "../../models/user.interface";
 import {InjectRepository} from "@nestjs/typeorm";
@@ -7,6 +7,7 @@ import {BlogEntryEntity} from "../../models/blog-entry.entity";
 import {Repository} from "typeorm";
 import {UserService} from "../user/user.service";
 import slugify from "slugify";
+import {IPaginationOptions, paginate, Pagination} from "nestjs-typeorm-paginate";
 
 @Injectable()
 export class BlogService {
@@ -32,6 +33,25 @@ export class BlogService {
     }));
   }
 
+  paginateAll(options: IPaginationOptions): Observable<Pagination<IBlogEntry>> {
+    return from(paginate<IBlogEntry>(this.blogRepository, options, {
+      relations: ['author']
+    })).pipe(
+      map((blogEntries: Pagination<IBlogEntry>) => blogEntries)
+    );
+  }
+
+  paginateByUser(options: IPaginationOptions, userId: number): Observable<Pagination<IBlogEntry>> {
+    return from(paginate<IBlogEntry>(this.blogRepository, options, {
+      relations: ['author'],
+      where: {
+        author: {id: userId}
+      }
+    })).pipe(
+      map((blogEntries: Pagination<IBlogEntry>) => blogEntries)
+    );
+  }
+
   findByUserId(userId: number): Observable<IBlogEntry[]> {
     return from(this.blogRepository.find({
       where: {
@@ -55,7 +75,7 @@ export class BlogService {
       switchMap(() => this.findOneById(id))
     )
   }
-  
+
   deleteOne(id: number): Observable<any> {
     return from(this.blogRepository.delete(id));
   }
