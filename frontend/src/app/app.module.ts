@@ -23,6 +23,8 @@ import {UpdateUserProfileComponent} from './components/update-user-profile/updat
 import {JWT_OPTIONS, JwtHelperService} from "@auth0/angular-jwt";
 import {JwtInterceptor} from "./interceptors/jwt.interceptor";
 import {MatProgressBarModule} from "@angular/material/progress-bar";
+import { HomeComponent } from './components/home/home.component';
+import { AllBlogEntriesComponent } from './components/all-blog-entries/all-blog-entries.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +33,9 @@ import {MatProgressBarModule} from "@angular/material/progress-bar";
     RegisterComponent,
     UsersComponent,
     UserProfileComponent,
-    UpdateUserProfileComponent
+    UpdateUserProfileComponent,
+    HomeComponent,
+    AllBlogEntriesComponent
   ],
   imports: [
     BrowserModule,

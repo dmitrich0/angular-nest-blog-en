@@ -1,10 +1,10 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {catchError, map, Observable, throwError} from "rxjs";
-import {User} from "../auth-service/auth.service";
+import {IUser} from "../../models/user.interface";
 
 export interface UserData {
-  items: User[],
+  items: IUser[],
   meta: {
     totalItems: number,
     itemCount: number,
@@ -29,13 +29,13 @@ export class UserService {
 
   }
 
-  findOne(id: number): Observable<User> {
+  findOne(id: number): Observable<IUser> {
     return this.httpClient.get('/api/users/' + id).pipe(
-      map((user: User) => user)
+      map((user: IUser) => user)
     );
   }
 
-  updateOne(user: User): Observable<User> {
+  updateOne(user: IUser): Observable<IUser> {
     return this.httpClient.put('api/users/' + user.id, user);
   }
 

@@ -1,0 +1,27 @@
+<div class="w-[50%] ml-[25%]">
+  <!--suppress TypeScriptValidateJSTypes -->
+  <mat-card *ngFor="let blogEntry of (dataSource | async)?.items" class="mt-[15px]">
+    <div class="flex p-5">
+      <div>
+        <img *ngIf="blogEntry.headerImage; else placeholderImage" class="header_image"
+             src="http://localhost:3000/api/blog-entries/image/{{blogEntry.headerImage}}" alt="Header image">
+        <ng-template #placeholderImage>
+          <img class="header_image" src="../../../assets/placeholders/person-placeholder.jpeg" alt="Placeholder">
+        </ng-template>
+      </div>
+      <div class="ml-5 flex flex-col justify-between content-between">
+        <h2>{{blogEntry.title}}</h2>
+        <p>{{blogEntry.description}}</p>
+        <small>Author: {{blogEntry.author?.name}}</small>
+      </div>
+    </div>
+  </mat-card>
+  <mat-paginator
+    [length]="(dataSource | async)?.meta?.totalItems"
+    [pageSize]="(dataSource | async)?.meta?.itemsPerPage"
+    [pageSizeOptions]="[5, 10, 25, 50, 100]"
+    (page)="onPaginateChange($event)"
+    showFirstLastButtons="true"
+  >
+  </mat-paginator>
+</div>

@@ -2,21 +2,11 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {map, Observable, of, switchMap, tap} from "rxjs";
 import {JwtHelperService} from "@auth0/angular-jwt";
+import {IUser} from "../../models/user.interface";
 
 export interface LoginForm {
   email: string;
   password: string;
-}
-
-export interface User {
-  id?: null;
-  name?: string;
-  username?: string;
-  email?: string;
-  password?: string;
-  // passwordConfirm?: string;
-  role?: string;
-  profileImage?: string;
 }
 
 export const JWT_NAME = 'blog-token';
@@ -39,7 +29,7 @@ export class AuthService {
     );
   }
 
-  register(user: User) {
+  register(user: IUser) {
     return this.httpClient.post<any>('/api/users', user).pipe(
       tap(user => console.log(user)),
       map(user => user)
