@@ -29,6 +29,10 @@ export class AuthService {
     );
   }
 
+  logout() {
+    localStorage.removeItem(JWT_NAME);
+  }
+
   register(user: IUser) {
     return this.httpClient.post<any>('/api/users', user).pipe(
       tap(user => console.log(user)),

@@ -1,0 +1,41 @@
+<form [formGroup]="form">
+  <div>
+    <mat-card class="container">
+      <div class="w-[80%]">
+        <mat-card>
+          <mat-card-content>
+            <img *ngIf="form.get('headerImage').value"
+                 src="http://localhost:3000/api/blog-entries/image/{{form.get('headerImage').value}}" alt="">
+            <ul>
+              <li>
+                <mat-progress-bar [value]="file.progress"></mat-progress-bar>
+              </li>
+            </ul>
+            <mat-card-actions>
+              <button mat-flat-button color="warn" (click)="onClick()">
+                <mat-icon>cloud_upload</mat-icon>
+                <small>Upload image</small>
+              </button>
+            </mat-card-actions>
+          </mat-card-content>
+        </mat-card>
+        <input type="file" #fileUpload id="fileUpload" name="fileUpload" accept="image/*" style="display: none">
+      </div>
+      <div class="container w-1/2">
+        <mat-form-field>
+          <input matInput formControlName="id" placeholder="Id">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput formControlName="title" placeholder="Title">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput formControlName="description" placeholder="Description">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput formControlName="body" placeholder="Body">
+        </mat-form-field>
+      </div>
+      <button class="" mat-flat-button color="primary" [disabled]="form.invalid" type="submit" (click)="post()">Post</button>
+    </mat-card>
+  </div>
+</form>

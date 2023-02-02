@@ -1,10 +1,8 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {AuthService} from "../../services/auth-service/auth.service";
-import {UserService} from "../../services/user-service/user.service";
-import {catchError, map, of, switchMap, tap} from "rxjs";
+import {BlogService} from "../../services/blog-service/blog.service";
+import {catchError, map, of} from "rxjs";
 import {HttpErrorResponse, HttpEvent, HttpEventType} from "@angular/common/http";
-import {IUser} from "../../models/user.interface";
 
 export interface IFile {
   data: any;
@@ -13,46 +11,39 @@ export interface IFile {
 }
 
 @Component({
-  selector: 'app-update-user-profile',
-  templateUrl: './update-user-profile.component.html',
-  styleUrls: ['./update-user-profile.component.scss']
+  selector: 'app-create-blog-entry',
+  templateUrl: './create-blog-entry.component.html',
+  styleUrls: ['./create-blog-entry.component.scss']
 })
-export class UpdateUserProfileComponent implements OnInit {
+export class CreateBlogEntryComponent implements OnInit {
   @ViewChild('fileUpload', {static: false}) fileUpload!: ElementRef;
   file: IFile = {
     data: null,
     inProgress: false,
     progress: 0
-  }
+  };
+
   form!: FormGroup;
 
   constructor(
     private formBuilder: FormBuilder,
-    private authService: AuthService,
-    private userService: UserService
+    private blogService: BlogService
   ) {
   }
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
-      id: [{value: null, disabled: true}, [Validators.required]],
-      name: [null, [Validators.required]],
-      username: [null, [Validators.required]],
-      profileImage: [null]
+      id: [{value: null, disabled: true}],
+      title: [null, [Validators.required]],
+      slug: [{value: null, disabled: true}],
+      description: [null, [Validators.required]],
+      body: [null, [Validators.required]],
+      headerImage: [null, [Validators.required]]
     });
+  }
 
-    this.authService.getUserId().pipe(
-      switchMap((id: number) => this.userService.findOne(id).pipe(
-        tap((user: IUser) => {
-          this.form.patchValue({
-            id: user.id,
-            name: user.name,
-            username: user.username,
-            profileImage: user.profileImage
-          });
-        })
-      ))
-    ).subscribe();
+  post() {
+    this.blogService.post(this.form.getRawValue()).subscribe();
   }
 
   onClick() {
@@ -66,14 +57,14 @@ export class UpdateUserProfileComponent implements OnInit {
       };
       this.fileUpload.nativeElement.value = '';
       this.uploadFile();
-    }
+    };
   }
 
   uploadFile() {
     const formData = new FormData();
     formData.append('file', this.file.data);
     this.file.inProgress = true;
-    this.userService.uploadProfileImage(formData).pipe(
+    this.blogService.uploadHeaderImage(formData).pipe(
       // @ts-ignore
       map((e: HttpEvent<any>) => {
         switch (e.type) {
@@ -92,13 +83,9 @@ export class UpdateUserProfileComponent implements OnInit {
     ).subscribe((event: any) => {
       if (typeof event === 'object') {
         this.form.patchValue({
-          profileImage: event.body.profileImage
+          headerImage: event.body.filename
         });
       }
     });
-  }
-
-  update() {
-    this.userService.updateOne(this.form.getRawValue()).subscribe();
   }
 }
