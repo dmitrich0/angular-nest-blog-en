@@ -1,8 +1,9 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {BlogService} from "../../services/blog-service/blog.service";
-import {catchError, map, of} from "rxjs";
+import {catchError, map, of, tap} from "rxjs";
 import {HttpErrorResponse, HttpEvent, HttpEventType} from "@angular/common/http";
+import {Router} from "@angular/router";
 
 export interface IFile {
   data: any;
@@ -27,7 +28,8 @@ export class CreateBlogEntryComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private blogService: BlogService
+    private blogService: BlogService,
+    private router: Router
   ) {
   }
 
@@ -43,7 +45,11 @@ export class CreateBlogEntryComponent implements OnInit {
   }
 
   post() {
-    this.blogService.post(this.form.getRawValue()).subscribe();
+    this.blogService.post(this.form.getRawValue()).pipe(
+      tap(() => {
+        this.router.navigate(['']);
+      })
+    ).subscribe();
   }
 
   onClick() {
