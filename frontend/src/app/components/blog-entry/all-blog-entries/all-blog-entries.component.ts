@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {Observable} from "rxjs";
-import {IBlogEntriesPagable} from "../../models/blog-entry.interface";
+import {IBlogEntriesPagable} from "../../../models/blog-entry.interface";
 import {PageEvent} from "@angular/material/paginator";
-import {BlogService} from "../../services/blog-service/blog.service";
+import {BlogService} from "../../../services/blog-service/blog.service";
 
 @Component({
   selector: 'app-all-blog-entries',

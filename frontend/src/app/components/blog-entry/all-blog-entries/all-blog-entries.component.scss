@@ -5,3 +5,10 @@
   width: 150px;
   height: 150px;
 }
+
+.entry-card {
+  margin-top: 15px;
+  :hover {
+    cursor: pointer;
+  }
+}

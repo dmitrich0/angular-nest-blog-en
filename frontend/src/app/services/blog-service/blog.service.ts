@@ -11,6 +11,10 @@ export class BlogService {
   constructor(private httpClient: HttpClient) {
   }
 
+  findOne(id: number): Observable<IBlogEntry> {
+    return this.httpClient.get<IBlogEntry>(`/api/blog-entries/${id}`);
+  }
+
   indexAll(page: number, limit: number): Observable<IBlogEntriesPagable> {
     return this.httpClient.get<IBlogEntriesPagable>(`/api/blog-entries?page=${page}&limit=${limit}`);
   }

@@ -1,10 +1,10 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {AuthService} from "../../services/auth-service/auth.service";
-import {UserService} from "../../services/user-service/user.service";
+import {AuthService} from "../../../services/auth-service/auth.service";
+import {UserService} from "../../../services/user-service/user.service";
 import {catchError, map, of, switchMap, tap} from "rxjs";
 import {HttpErrorResponse, HttpEvent, HttpEventType} from "@angular/common/http";
-import {IUser} from "../../models/user.interface";
+import {IUser} from "../../../models/user.interface";
 
 export interface IFile {
   data: any;

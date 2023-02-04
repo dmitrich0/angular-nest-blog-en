@@ -1,6 +1,6 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {BlogService} from "../../services/blog-service/blog.service";
+import {BlogService} from "../../../services/blog-service/blog.service";
 import {catchError, map, of, tap} from "rxjs";
 import {HttpErrorResponse, HttpEvent, HttpEventType} from "@angular/common/http";
 import {Router} from "@angular/router";

@@ -1,12 +1,13 @@
 <div class="w-[50%] ml-[25%]">
+  <h1 class="text-center p-5">All Blog Entries</h1>
   <!--suppress TypeScriptValidateJSTypes -->
-  <mat-card *ngFor="let blogEntry of (dataSource | async)?.items" class="mt-[15px]">
+  <mat-card *ngFor="let blogEntry of (dataSource | async)?.items" class="entry-card" routerLink="../blog-entries/{{blogEntry.id}}">
     <div class="flex p-5">
       <div>
         <img *ngIf="blogEntry.headerImage; else placeholderImage" class="header_image"
              src="http://localhost:3000/api/blog-entries/image/{{blogEntry.headerImage}}" alt="Header image">
         <ng-template #placeholderImage>
-          <img class="header_image" src="../../../assets/placeholders/person-placeholder.jpeg" alt="Placeholder">
+          <img class="header_image" src="../../../../assets/placeholders/person-placeholder.jpeg" alt="Placeholder">
         </ng-template>
       </div>
       <div class="ml-5 flex flex-col justify-between content-between">

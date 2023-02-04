@@ -1,0 +1,22 @@
+<div *ngIf="(blogEntry$ | async) as blogEntry" class="main-div">
+  <mat-card class="entry-card">
+    <mat-card-header>
+      <div class="flex">
+        <div>
+          <img class="header-image" src="http://localhost:3000/api/blog-entries/image/{{blogEntry.headerImage}}" alt="Post image">
+        </div>
+        <div class="ml-2">
+          <h1>{{blogEntry.title}}</h1>
+          <h2>{{blogEntry.description}}</h2>
+          <h3>Author: {{blogEntry.author.name}}</h3>
+          <a routerLink="../../users/{{blogEntry.author.id}}">Author profile</a>
+        </div>
+      </div>
+    </mat-card-header>
+    <mat-card-content>
+      <div>
+        {{blogEntry.body}}
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
