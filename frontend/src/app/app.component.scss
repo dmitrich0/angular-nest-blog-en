@@ -1,14 +1,56 @@
-.example-icon {
-  padding: 0 14px;
+@keyframes swing {
+  15% {
+    transform: translateX(3px);
+  }
+  30% {
+    transform: translateX(-3px);
+  }
+  40% {
+    transform: translateX(2px);
+  }
+  50% {
+    transform: translateX(-2px);
+  }
+  65% {
+    transform: translateX(1px);
+  }
+  100% {
+    transform: translateX(0);
+  }
 }
+
 .example-spacer {
   flex: 1 1 auto;
 }
 
-.toolbar-btn {
-  margin-right: 20px;
+.toolbar {
+  background-color: #2b98cc;
 }
 
-.home-link:hover {
-  cursor: pointer;
+.toolbar__row {
+  padding: 30px 5vw;
+  align-items: center;
+}
+
+.toolbar__home {
+  color: #fff;
+  &:hover {
+    animation: swing .6s ease;
+    text-decoration: underline;
+  }
+}
+
+.toolbar__btn {
+  margin-right: 20px;
+  transition: all .1s ease-in;
+  &:hover {
+    background-color: #6ad2ff;
+    color: #fff;
+  }
+}
+
+.toolbar__select {
+  font-size: 10px;
+  position: relative;
+  top: 11px;
 }

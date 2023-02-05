@@ -1,16 +1,16 @@
-<mat-toolbar color="primary">
-  <mat-toolbar-row class="toolbar-row">
-    <span routerLink="/home" class="home-link">Home</span>
+<mat-toolbar class="toolbar">
+  <mat-toolbar-row class="toolbar__row">
+    <a class="toolbar__home" routerLink="/home">Home</a>
     <span class="example-spacer"></span>
-    <button mat-flat-button routerLink="users" class="toolbar-btn">Users</button>
-    <button disabled mat-flat-button routerLink="admin" class="toolbar-btn">Admin</button>
-    <button mat-flat-button routerLink="create-blog-entry" class="toolbar-btn">New post</button>
-    <mat-form-field class="toolbar-select" name="loginRegisterDropdown">
-      <mat-select placeholder="Login">
-        <mat-option (click)="navigateTo('login')">Login</mat-option>
-        <mat-option (click)="navigateTo('register')">Register</mat-option>
-        <mat-option (click)="navigateTo('update-profile')">Update profile</mat-option>
-        <mat-option (click)="logout()">Logout</mat-option>
+    <button mat-flat-button routerLink="users" class="toolbar__btn">Users</button>
+    <button disabled mat-flat-button routerLink="admin" class="toolbar__btn">Admin</button>
+    <button mat-flat-button routerLink="create-blog-entry" class="toolbar__btn">New post</button>
+    <mat-form-field class="toolbar__select">
+      <mat-select placeholder="Actions">
+        <mat-option [disabled]="(authed | async)" (onSelectionChange)="navigateTo('login')"><mat-icon>input</mat-icon>Login</mat-option>
+        <mat-option [disabled]="(authed | async)" (onSelectionChange)="navigateTo('register')"><mat-icon>send</mat-icon>Register</mat-option>
+        <mat-option [disabled]="!(authed | async)" (onSelectionChange)="navigateTo('update-profile')"><mat-icon>account_circle</mat-icon>Update profile</mat-option>
+        <mat-option [disabled]="!(authed | async)" (onSelectionChange)="logout()"><mat-icon>clear</mat-icon>Logout</mat-option>
       </mat-select>
     </mat-form-field>
   </mat-toolbar-row>
