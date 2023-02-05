@@ -1,10 +1,11 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, Inject, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AuthService} from "../../../services/auth-service/auth.service";
 import {UserService} from "../../../services/user-service/user.service";
 import {catchError, map, of, switchMap, tap} from "rxjs";
 import {HttpErrorResponse, HttpEvent, HttpEventType} from "@angular/common/http";
 import {IUser} from "../../../models/user.interface";
+import {WINDOW} from "../../../window-token";
 
 export interface IFile {
   data: any;
@@ -25,11 +26,13 @@ export class UpdateUserProfileComponent implements OnInit {
     progress: 0
   }
   form!: FormGroup;
+  origin = this.window.location.origin;
 
   constructor(
     private formBuilder: FormBuilder,
     private authService: AuthService,
-    private userService: UserService
+    private userService: UserService,
+    @Inject(WINDOW) private window: Window
   ) {
   }
 

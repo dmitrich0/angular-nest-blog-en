@@ -26,7 +26,8 @@ import {MatProgressBarModule} from "@angular/material/progress-bar";
 import {HomeComponent} from './components/home/home.component';
 import {AllBlogEntriesComponent} from './components/blog-entry/all-blog-entries/all-blog-entries.component';
 import {CreateBlogEntryComponent} from './components/blog-entry/create-blog-entry/create-blog-entry.component';
-import { ViewBlogEntryComponent } from './components/blog-entry/view-blog-entry/view-blog-entry.component';
+import {ViewBlogEntryComponent} from './components/blog-entry/view-blog-entry/view-blog-entry.component';
+import {WINDOW_PROVIDERS} from "./window-token";
 
 @NgModule({
   declarations: [
@@ -59,7 +60,7 @@ import { ViewBlogEntryComponent } from './components/blog-entry/view-blog-entry/
     MatCardModule,
     MatProgressBarModule,
   ],
-  providers: [JwtHelperService,
+  providers: [JwtHelperService, WINDOW_PROVIDERS,
     {provide: JWT_OPTIONS, useValue: JWT_OPTIONS},
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true}],
   bootstrap: [AppComponent]

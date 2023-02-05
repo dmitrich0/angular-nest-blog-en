@@ -3,7 +3,7 @@
     <div class="flex p-5">
       <div>
         <img *ngIf="blogEntry.headerImage; else placeholderImage" class="header_image"
-             src="http://localhost:3000/api/blog-entries/image/{{blogEntry.headerImage}}" alt="Header image">
+             src="{{origin}}/api/blog-entries/image/{{blogEntry.headerImage}}" alt="Header image">
         <ng-template #placeholderImage>
           <img class="header_image" src="../../../../assets/placeholders/person-placeholder.jpeg" alt="Placeholder">
         </ng-template>

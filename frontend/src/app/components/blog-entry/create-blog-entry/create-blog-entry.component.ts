@@ -1,9 +1,10 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, Inject, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {BlogService} from "../../../services/blog-service/blog.service";
 import {catchError, map, of, tap} from "rxjs";
 import {HttpErrorResponse, HttpEvent, HttpEventType} from "@angular/common/http";
 import {Router} from "@angular/router";
+import {WINDOW} from "../../../window-token";
 
 export interface IFile {
   data: any;
@@ -25,11 +26,13 @@ export class CreateBlogEntryComponent implements OnInit {
   };
 
   form!: FormGroup;
+  origin = this.window.location.origin;
 
   constructor(
     private formBuilder: FormBuilder,
     private blogService: BlogService,
-    private router: Router
+    private router: Router,
+    @Inject(WINDOW) private window: Window
   ) {
   }
 
