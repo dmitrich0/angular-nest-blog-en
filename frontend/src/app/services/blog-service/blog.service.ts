@@ -19,6 +19,10 @@ export class BlogService {
     return this.httpClient.get<IBlogEntriesPagable>(`/api/blog-entries?page=${page}&limit=${limit}`);
   }
 
+  indexByUser(userId: number, page: number, limit: number): Observable<IBlogEntriesPagable> {
+    return this.httpClient.get<IBlogEntriesPagable>(`/api/blog-entries/user/${userId}?page=${page}&limit=${limit}`);
+  }
+
   post(blogEntry: IBlogEntry): Observable<IBlogEntry> {
     return this.httpClient.post<IBlogEntry>('/api/blog-entries', blogEntry);
   }
